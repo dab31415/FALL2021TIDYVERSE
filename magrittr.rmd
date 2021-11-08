@@ -1,0 +1,48 @@
+---
+title: 'tidyverse: pipe variations'
+author: "Donald Butler"
+date: "11/07/2021"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+
+library(tidyverse)
+```
+
+# Tidyverse pipe operator
+
+## Comparing Student Performance on Exams
+
+Source: https://www.kaggle.com/spscientist/students-performance-in-exams
+
+I selected a simple dataset that could be used to demonstrate the use of the pipe operator to non-tidyverse functions.
+
+```{r, warning=FALSE}
+student_performance = read_csv("https://raw.githubusercontent.com/dab31415/DATA607/main/StudentsPerformance.csv")
+student_performance
+```
+
+## 1A: basic pipe
+
+The magrittr package defines the pipe operator, `%>%`, which is heavily used in the tidyverse. The pipe operator allows you to pass the output of one function as the input of the next. This works well with tidyverse functions because the data parameter is the first one in the tidyverse functions.
+
+```{r}
+student_performance %>%
+  filter(gender == 'female') %>%
+  ggplot(aes(`writing score`,`reading score`)) + 
+  geom_point() + 
+  geom_smooth(method = lm)
+```
+ 
+## 1B: How can I pipe to a function where data is not the first parameter?
+
+The lm function is used to perform linear regression. The first parameter of lm is the formula to perform the regression on, and the second parameter is data. The magrittr package provides for an argument placeholder, `.`,  to allow the pipe to pass to any parameter in the next function.
+
+```{r}
+student_performance %>%
+  filter(gender == 'female') %>%
+  lm(`reading score` ~ `writing score`, data = .)
+```
+

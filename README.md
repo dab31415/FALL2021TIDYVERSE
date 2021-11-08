@@ -82,7 +82,9 @@ Revision/Addition Description and Link:
 
 # Donald B
 Initial Description and Link:
-
+* Demonstrate how to pipe output to a function parameter that is not listed in first position
+* https://github.com/dab31415/FALL2021TIDYVERSE/blob/main/magrittr.rmd
+
 Revision/Addition Description and Link:
 
 
